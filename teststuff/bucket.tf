@@ -11,7 +11,7 @@ resource "aws_s3_bucket_website_configuration" "www-bucket" {
     bucket = aws_s3_bucket.www-bucket.id
 
     index_document {
-      suffix = index.html
+      suffix = "index.html"
     }
 
     error_document {
