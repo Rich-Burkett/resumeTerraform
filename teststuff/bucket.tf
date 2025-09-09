@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "www-bucket" {
   
 }
 
-resource "aws_s3_bucket_website_configuration" "www-bucket" {
+resource "aws_s3_bucket_website_configuration" "www-bucket-config" {
 
     bucket = aws_s3_bucket.www-bucket.id
 
@@ -24,22 +24,23 @@ resource "aws_s3_account_public_access_block" "bucket_access_block" {
     
     block_public_acls = false
     block_public_policy = false
+    
 
 }
 
-resource "aws_s3_bucket_policy" "name" {
+resource "aws_s3_bucket_policy" "www-bucket-pol" {
     bucket = aws_s3_bucket.www-bucket.id
-    policy = jsondecode({
+    policy = jsonencode({
 
-        version = "2012-10-17"
+        Version = "2012-10-17"
         Statement = [
             {
                 Effect = "Allow"
-                Pricipal = "*"
+                Principal = "*"
                 Action = [
-                    "s3.GetObject"
+                    "s3:GetObject"
                 ]
-                resource = [
+                Resource = [
                     "${aws_s3_bucket.www-bucket.arn}/*"
                 ]
 
